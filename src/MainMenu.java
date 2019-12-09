@@ -49,6 +49,7 @@ public class MainMenu {
                 "5. Exit.\n" +
                 "Enter an option (1, 2, 3, 4 or 5):",1,5);
         input.cleanLines();
+        makeMap();
 
         switch (chooseOption){
             case 1:
@@ -74,12 +75,13 @@ public class MainMenu {
                 break;
             case 5:
 //                exit program
+                refreshContacts();
+                System.out.println("Saving contacts\nExiting...");
                 System.exit(0);
                 break;
             default:
                 System.out.println("good job you beat the system...");
         }
-
     }
 
     public static List<String> pulledContacts(){
@@ -160,10 +162,15 @@ public class MainMenu {
             String editNum = input.getString("Warning, Contact already exist do you want to edit contact's Number? (yes/no)");
             if (editNum.equalsIgnoreCase("yes")||editNum.equalsIgnoreCase("y")){
                 list.remove(newName,newNum);
+                refreshContacts();
             }else {
-                System.out.println("Adding contact...");
-                list.put(newName,newNum);
+                System.out.println("Canceling...");
             }
+        } else {
+            System.out.println("Adding contact...");
+            System.out.println();
+            list.put(newName,newNum);
+            refreshContacts();
         }
 
     }
