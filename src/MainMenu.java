@@ -4,6 +4,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import util.Input;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,6 +48,7 @@ public class MainMenu {
                 "4. Delete an existing contact.\n" +
                 "5. Exit.\n" +
                 "Enter an option (1, 2, 3, 4 or 5):",1,5);
+        input.cleanLines();
 
         switch (chooseOption){
             case 1:
@@ -66,6 +69,8 @@ public class MainMenu {
                 break;
             case 4:
 //                delete a contact
+                removeContact();
+                Menu();
                 break;
             case 5:
 //                exit program
@@ -172,7 +177,7 @@ public class MainMenu {
             if (confirmDelete.equalsIgnoreCase("yes")||confirmDelete.equalsIgnoreCase("y")){
                 System.out.println("Deleting "+newName+"...");
                 list.remove(newName);
-
+                refreshContacts();
                 return;
             }else {
                 System.out.println("Canceling...");
@@ -191,7 +196,14 @@ public class MainMenu {
     }
 
     public static void refreshContacts(){
+        makeListArray();
+        List<String> contactsList = Arrays.asList(listArray);
 
+        try {
+            Files.write(contactPath, contactsList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
