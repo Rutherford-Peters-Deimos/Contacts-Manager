@@ -9,7 +9,8 @@ import java.util.List;
 
 public class MainMenu {
     private static Input input = new Input();
-    private static HashMap<String,Integer> list = new HashMap<>();
+    private static HashMap<String,String> list = new HashMap<>();
+    private static String[] listArray;
     private static final String directory = "contactslist";
     private static final String filename = "contacts.txt";
     private static Path contactPath;
@@ -50,6 +51,7 @@ public class MainMenu {
             case 1:
 //                view contacts
                 viewContacts();
+                makeMap();
                 Menu();
                 break;
             case 2:
@@ -57,6 +59,8 @@ public class MainMenu {
                 break;
             case 3:
 //                search by name
+                searchList();
+                Menu();
                 break;
             case 4:
 //                delete a contact
@@ -90,6 +94,49 @@ public class MainMenu {
         }
         System.out.println("---------------");
         System.out.println();
+    }
+
+    public static void makeMap(){
+        List<String> conList = pulledContacts();
+        for (String contact: conList){
+            String name = contact.substring(0,contact.indexOf("|")-1);
+            String number = contact.substring(contact.indexOf("|")+2);
+            if (!list.containsKey(name)){
+                list.put(name,number);
+            }
+        }
+        makeListArray();
+    }
+
+    public static void makeListArray(){
+        listArray = new String[list.size()];
+        int index = 0;
+        for(HashMap.Entry<String,String> entry: list.entrySet()){
+            listArray[index] = entry.getKey() + " | " + entry.getValue();
+            index++;
+        }
+    }
+
+    public static void searchList(){
+        makeMap();
+        String searchName = input.getString("Enter a Name:");
+        if (list.containsKey(searchName)){
+            String num = list.get(searchName);
+            System.out.println(searchName + " | "+ num);
+        }else {
+            System.out.println("Error: Contact not in the list....");
+            String yesNo = input.getString("Would you like to create a contact?(yes/no)");
+            if (yesNo.equalsIgnoreCase("yes")||yesNo.equalsIgnoreCase("y")){
+//                add contact function
+            }
+
+        }
+
+
+
+
+
+
     }
 
 
