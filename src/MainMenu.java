@@ -56,6 +56,8 @@ public class MainMenu {
                 break;
             case 2:
 //                add new contact
+                addContact();
+                Menu();
                 break;
             case 3:
 //                search by name
@@ -87,6 +89,15 @@ public class MainMenu {
 
     public static void viewContacts(){
         List<String> conList = pulledContacts();
+        if (conList.isEmpty()){
+            System.out.println("Error: Contacts List is EMPTY...");
+            String yesNo = input.getString("Would you like to create a contact?(yes/no)");
+            if (yesNo.equalsIgnoreCase("yes")||yesNo.equalsIgnoreCase("y")){
+//                add contact function
+                addContact();
+            }
+            return;
+        }
         System.out.println("Name | Phone number\n" +
                 "---------------");
         for (String contact: conList){
@@ -128,14 +139,58 @@ public class MainMenu {
             String yesNo = input.getString("Would you like to create a contact?(yes/no)");
             if (yesNo.equalsIgnoreCase("yes")||yesNo.equalsIgnoreCase("y")){
 //                add contact function
+                addContact();
             }
 
         }
 
+    }
 
+    public static void addContact(){
+        String newName = input.getString("Enter a contact Name:");
+        System.out.println();
+        String newNum = input.getString("Enter phone Number (NO dashes or spaces):");
+        System.out.println();
+        if (list.containsKey(newName)){
+            String editNum = input.getString("Warning, Contact already exist do you want to edit contact's Number? (yes/no)");
+            if (editNum.equalsIgnoreCase("yes")||editNum.equalsIgnoreCase("y")){
+                list.remove(newName,newNum);
+            }else {
+                System.out.println("Adding contact...");
+                list.put(newName,newNum);
+            }
+        }
 
+    }
 
+    public  static void removeContact(){
+        String newName = input.getString("Enter the name of the contact you wish to remove:");
+        System.out.println();
+        if (list.containsKey(newName)){
+            String prompt = "Are you sure you want to delete " +newName + "? (yes/no)";
+            String confirmDelete = input.getString(prompt);
+            if (confirmDelete.equalsIgnoreCase("yes")||confirmDelete.equalsIgnoreCase("y")){
+                System.out.println("Deleting "+newName+"...");
+                list.remove(newName);
 
+                return;
+            }else {
+                System.out.println("Canceling...");
+            }
+        }else {
+            String tryAgain = input.getString("Error: contact could not be found...\nReturn to main menu? (yes/no)");
+            if (tryAgain.equalsIgnoreCase("yes")||tryAgain.equalsIgnoreCase("y")){
+                System.out.println("Returning to main menu...");
+                Menu();
+            }else {
+                System.out.println();
+                removeContact();
+            }
+        }
+
+    }
+
+    public static void refreshContacts(){
 
     }
 
