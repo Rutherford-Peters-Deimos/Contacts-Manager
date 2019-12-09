@@ -105,12 +105,15 @@ public class MainMenu {
             }
             return;
         }
-        System.out.println("Name | Phone number\n" +
-                "---------------");
-        for (String contact: conList){
-            System.out.println(contact);
+        System.out.println("Name              | Phone number   |\n" +
+                "------------------------------------");
+//        for (String contact: conList){
+//            System.out.println(contact);
+//        }
+        for(HashMap.Entry<String,String> entry: list.entrySet()){
+            System.out.printf("| %-15s | %-14s |%n",entry.getKey(),addDashes(entry.getValue()));
         }
-        System.out.println("---------------");
+        System.out.println("------------------------------------");
         System.out.println();
     }
 
@@ -212,6 +215,29 @@ public class MainMenu {
             e.printStackTrace();
         }
     }
+
+    public static String addDashes(String number){
+        int size = number.length();
+        if (size == 7){
+            String first3 = number.substring(0,3);
+            String last4 = number.substring(3);
+            return first3+"-"+last4;
+        }else if (size == 10){
+            String first3 = number.substring(0,3);
+            String next3 = number.substring(3,6);
+            String last4 = number.substring(6);
+            return first3+"-"+next3+"-"+last4;
+        }else if (size == 11){
+            String first1 = number.substring(0,1);
+            String next3 = number.substring(1,4);
+            String nextNext3 = number.substring(4,7);
+            String last4 = number.substring(7);
+            return first1+"-"+next3+"-"+nextNext3+"-"+last4;
+        }else {
+            return number;
+        }
+    }
+
 
 
 }
