@@ -55,9 +55,9 @@ public class Input {
     public int getInt() {
         System.out.println("enter a integer:");
 //        return scanner.nextInt();
-        try{
+        try {
             return Integer.parseInt(getString());
-        } catch (NumberFormatException nfe){
+        } catch (NumberFormatException nfe) {
             System.out.println("Error: Not a integer input... ");
             return getInt();
         }
@@ -91,9 +91,9 @@ public class Input {
     public double getDouble() {
         System.out.println("Enter a double");
 //        return scanner.nextDouble();
-        try{
+        try {
             return Double.parseDouble(getString());
-        } catch (NumberFormatException nfe){
+        } catch (NumberFormatException nfe) {
             System.out.println("Error: Not a decimal input...");
             return getDouble();
         }
