@@ -164,7 +164,7 @@ public class MainMenu {
         if (list.containsKey(newName)){
             String editNum = input.getString("Warning, Contact already exist do you want to edit contact's Number? (yes/no)");
             if (editNum.equalsIgnoreCase("yes")||editNum.equalsIgnoreCase("y")){
-                list.remove(newName,newNum);
+                list.replace(newName,newNum);
                 refreshContacts();
             }else {
                 System.out.println("Canceling...");
